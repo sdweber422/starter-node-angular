@@ -7,9 +7,6 @@ services: mongodb
 cache:  
   directories:
     - "node_modules"
-install:
-  - npm install
-  - bower install
 deploy:
   - provider: script
     skip_cleanup: true
