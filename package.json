@@ -2,15 +2,15 @@
   "name": "starter-node-angular",
   "main": "server.js",
   "dependencies": {
+    "@bower_components/angular": "angular/bower-angular#1.8.2",
+    "@bower_components/angular-route": "angular/bower-angular-route#*",
+    "@bower_components/bootstrap": "twbs/bootstrap#*",
     "body-parser": "~1.4.2",
     "express": "~4.5.1",
     "method-override": "~2.0.2",
     "mongoose": "~3.8.0",
     "node-cmd": "^4.0.0",
-    "node-ssh": "^11.1.1",
-    "@bower_components/angular": "angular/bower-angular#1.8.2",
-    "@bower_components/angular-route": "angular/bower-angular-route#*",
-    "@bower_components/bootstrap": "twbs/bootstrap#*"
+    "node-ssh": "^11.1.1"
   },
   "engines": {
     "yarn": ">= 1.0.0"

@@ -3,7 +3,7 @@ var path, node_ssh, ssh, fs;
 fs = require('fs');
 path = require('path');
 node_ssh = require('node-ssh');
-ssh = new node_ssh();
+ssh = new node_ssh.NodeSSH();
 
 // the method that starts the deployment process
 function main() {
@@ -17,6 +17,14 @@ function installPM2() {
     'sudo npm install pm2 -g', {
       cwd: '/home/ubuntu'
   });
+}
+
+//installs Yarn
+function installYarn() {
+    return ssh.execCommand(
+        'sudo npm install -g yarn', {
+            cwd: '/home/ubuntu'
+        })
 }
 
 // transfers local project to the remote server
@@ -73,7 +81,7 @@ function updateRemoteApp() {
 // restart mongodb and node services on the remote server
 function restartRemoteServices() {
   return ssh.execCommand(
-    'cd starter-node-angular && sudo service mongod start && npm install && bower install && pm2 start server.js', {
+    'cd starter-node-angular && sudo service mongod start && sudo yarn && pm2 start server.js', {
       cwd: '/home/ubuntu'
   });
 }
@@ -93,6 +101,10 @@ function sshConnect() {
       console.log('SSH Connection established.');
       console.log('Installing PM2...');
       return installPM2();
+    })
+    .then(function() {
+        console.log('Installing Yarn...');
+        return installYarn();
     })
     .then(function() {
       console.log('Creating `starter-node-angular-temp` folder.');
