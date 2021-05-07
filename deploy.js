@@ -24,7 +24,7 @@ function installYarn() {
     return ssh.execCommand(
         'sudo npm install -g yarn', {
             cwd: '/home/ubuntu'
-        })
+        });
 }
 
 // transfers local project to the remote server
@@ -38,7 +38,7 @@ function transferProjectToRemote(failed, successful) {
       validate: function(itemPath) {
         const baseName = path.basename(itemPath);
         return (
-          baseName.substr(0, 1) !== '.' && baseName !== 'node_modules' // do not allow dot files
+          baseName.substr(0, 1) !== '.' && baseName !== 'node_modules' && baseName !== 'lib' // do not allow dot files
         ); // do not allow node_modules
       },
       tick: function(localPath, remotePath, error) {
@@ -57,7 +57,7 @@ function transferProjectToRemote(failed, successful) {
 // creates a temporary folder on the remote server
 function createRemoteTempFolder() {
   return ssh.execCommand(
-    'rm -rf starter-node-angular-temp && mkdir starter-node-angular-temp', {
+    'sudo rm -rf starter-node-angular-temp && mkdir starter-node-angular-temp', {
       cwd: '/home/ubuntu'
   });
 }
@@ -73,7 +73,7 @@ function stopRemoteServices() {
 // updates the project source on the server
 function updateRemoteApp() {
   return ssh.execCommand(
-    'rm -rf starter-node-angular && mkdir starter-node-angular && cp -r starter-node-angular-temp/* starter-node-angular/ && rm -rf starter-node-angular-temp', {
+    'sudo rm -rf starter-node-angular && mkdir starter-node-angular && sudo cp -rf starter-node-angular-temp/* starter-node-angular/ && sudo rm -rf starter-node-angular-temp', {
       cwd: '/home/ubuntu'
   });
 }
